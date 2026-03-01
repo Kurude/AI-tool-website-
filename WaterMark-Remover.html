@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon"href="favicon-16x16[1].png"type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI object remover  </title>
+<style>
+  body { margin:0; font-family:Arial; background:#fff; color:#111; }
+  .container { max-width:900px; margin:auto; padding:20px; }
+  h1 { text-align:center; margin-bottom:20px; }
+  .upload { border:2px dashed #999; padding:20px; text-align:center; border-radius:10px; }
+  #canvas { width:100%; border:1px solid #ddd; margin-top:20px; cursor:crosshair; }
+  button { margin-top:15px; width:100%; padding:14px; background:#111; color:#fff; border:none; border-radius:8px; cursor:pointer; font-size:16px; }
+  #result { margin-top:25px; text-align:center; }
+  #result img { max-width:100%; margin-top:15px; border-radius:10px; }
+  #download { display:none; margin-top:12px; padding:12px 20px; background:#111; color:#fff; text-decoration:none; border-radius:8px; font-size:16px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1> WaterMark Remover </h1>
+
+  <div class="upload">
+    <input type="file" id="inp" accept="image/*">
+    <p>Upload image and brush over area to remove</p>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <button id="btn">Remove Watermark</button>
+
+  <div id="result">
+    <h3>Result</h3>
+    <img id="outImg">
+    <a id="download" download="cleaned.png">Download</a>
+  </div>
+</div>
+
+<script>
+const API_KEY = "b603c361947ed03026d882fde00862b735831d1c21b1f32f9dfb7ae968cf5afddf97f0725f7c058d00a747dbfc40c0f3";  // ← apni API key daal do
+
+const inp = document.getElementById("inp");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let img = null;
+let mask = document.createElement("canvas");
+let maskCtx = mask.getContext("2d");
+let drawing = false;
+
+inp.addEventListener("change", e => {
+  const file = e.target.files[0];
+  const i = new Image();
+  i.onload = () => {
+    canvas.width = i.width;
+    canvas.height = i.height;
+    mask.width = i.width;
+    mask.height = i.height;
+    ctx.drawImage(i,0,0);
+    img = i;
+  }
+  i.src = URL.createObjectURL(file);
+});
+
+canvas.addEventListener("mousedown", ()=> drawing = true);
+canvas.addEventListener("mouseup", ()=> { drawing=false; maskCtx.beginPath(); });
+canvas.addEventListener("mousemove", e => {
+  if (!drawing) return;
+  const x = e.offsetX, y = e.offsetY;
+  maskCtx.fillStyle = "white";
+  maskCtx.beginPath();
+  maskCtx.arc(x,y,25,0,Math.PI*2);
+  maskCtx.fill();
+
+  ctx.drawImage(img,0,0);
+  ctx.globalAlpha = 0.4;
+  ctx.drawImage(mask,0,0);
+  ctx.globalAlpha = 1;
+});
+
+document.getElementById("btn").onclick = async () => {
+  if (!img) return alert("Upload an image first");
+  const imgBlob = await new Promise(r=>canvas.toBlob(r,"image/png"));
+  const maskBlob = await new Promise(r=>mask.toBlob(r,"image/png"));
+
+  const fd = new FormData();
+  fd.append("image_file", imgBlob, "image.png");
+  fd.append("mask_file", maskBlob, "mask.png");
+  // optional: fd.append("mode","fast"); // or "quality"
+
+  const resp = await fetch("https://clipdrop-api.co/cleanup/v1", {
+    method:"POST",
+    headers: { "x-api-key": API_KEY },
+    body: fd
+  });
+
+  if (!resp.ok) {
+    const err = await resp.json().catch(()=>null);
+    alert("API Error: "+ resp.status + (err?.error ? " — "+ err.error : ""));
+    return;
+  }
+
+  const blob = await resp.blob();
+  const url = URL.createObjectURL(blob);
+
+  document.getElementById("outImg").src = url;
+  const dl = document.getElementById("download");
+  dl.style.display = "inline-block";
+  dl.href = url;
+};
+</script>
+
+</body>
+</html>
