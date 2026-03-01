@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon"href="favicon-16x16[1].png"type="image/x-icon">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>I ❤️ AI - Tools</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter, Arial, Helvetica, sans-serif}
+body{background:#fff;color:#222;line-height:1.4}
+
+/* HEADER */
+.top-header{width:100%;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e6e6e6;position:sticky;top:0;background:#fff;z-index:1000}
+.left-menu{display:flex;align-items:center;gap:40px}
+.logo{font-size:26px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px}
+.logo span{color:#e60023}
+.menu{display:flex;gap:25px;font-weight:600;color:#444}
+.menu-item{position:relative;cursor:pointer}
+.menu-item:hover{color:#e60023}
+
+.dropdown{display:none;position:absolute;top:28px;left:0;background:#fff;border:1px solid #ddd;width:220px;border-radius:6px;padding:8px 0;box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+.menu-item:hover .dropdown{display:block}
+.dropdown a{display:block;padding:9px 16px;color:#333;text-decoration:none;font-size:14px}
+.dropdown a:hover{background:#f5f5f5;color:#e60023}
+
+.right-menu{display:flex;align-items:center;gap:18px}
+.login{cursor:pointer}
+.signup{background:#e60023;padding:8px 16px;color:#fff;border-radius:8px;font-weight:700;cursor:pointer}
+.grid-icon{font-size:19px;cursor:pointer;color:#444}
+
+/* HERO */
+.hero{padding:60px 20px 30px;text-align:center;background:linear-gradient(90deg, rgba(230,0,35,0.02), rgba(0,0,0,0.00))}
+.hero h1{font-size:44px;font-weight:800;color:#222;margin-bottom:12px}
+.hero p{font-size:18px;color:#666;max-width:900px;margin:0 auto}
+
+/* TAGS */
+.tags{margin-top:28px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding-bottom:18px}
+.tag-btn{padding:10px 18px;border:1px solid #ddd;border-radius:26px;font-size:14px;background:#fff;cursor:pointer;transition:.18s;user-select:none}
+.tag-btn:hover{border-color:#e60023;color:#e60023}
+.tag-btn.active{background:#111;color:#fff;border-color:#111}
+
+/* CONTAINER / GRID */
+.container{width:92%;max-width:1200px;margin:28px auto 80px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+
+.tool-box{padding:26px 18px;border:1px solid #f0f0f0;border-radius:12px;text-align:center;transition:.25s;cursor:pointer;background:#fff}
+.tool-box i{color:#e60023;font-size:38px;margin-bottom:14px}
+.tool-box h3{font-size:18px;margin-bottom:8px;font-weight:700}
+.tool-box p{font-size:14px;color:#666}
+.tool-box:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,0.08);border-color:#e60023}
+
+/* MODAL */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:2000;padding:20px}
+.modal{width:100%;max-width:420px;background:#fff;border-radius:10px;padding:22px;border:1px solid #eee;box-shadow:0 10px 40px rgba(0,0,0,0.12)}
+.modal h2{font-size:20px;margin-bottom:8px}
+.modal p{font-size:14px;color:#666;margin-bottom:14px}
+
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.field input{padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px}
+
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+.btn{padding:10px 14px;border-radius:8px;cursor:pointer;border:0;font-weight:700}
+.btn-primary{background:#e60023;color:#fff}
+.btn-ghost{background:#f6f6f6;color:#333;border:1px solid #eaeaea}
+
+@media (max-width:700px){
+.top-header{padding:12px 18px}
+.logo{font-size:20px}
+.hero h1{font-size:28px}
+.menu{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="top-header">
+<div class="left-menu">
+<div class="logo" id="homeBtn">I <span>❤️</span> AI</div>
+
+<div class="menu">
+
+<div class="menu-item">
+IMAGE TOOLS ▼
+<div class="dropdown">
+<a href="image-generator.html" data-tool="ai-image-generator">AI Image Generator</a>
+<a href="Portrait-generator.html" data-tool="ai-portrait-generator">AI Portrait Generator</a>
+<a href="Avatar-generator.html" data-tool="ai-avatar-generator">AI Avatar Generator</a>
+<a href="Sticker-generator.html" data-tool="ai-sticker-generator">AI Sticker Generator</a>
+<a href="Logo-generator.html" data-tool="ai-logo-generator">AI Logo Generator</a>
+<a href="Meme-generator.html" data-tool="ai-meme-generator">AI Meme Generator</a>
+</div>
+</div>
+
+<div class="menu-item">
+REMOVE TOOLS ▼
+<div class="dropdown">
+<a href="Background-Remover.html" data-tool="ai-background-remover">AI Background Remover</a>
+<a href="Background-Changer.html" data-tool="ai-background-changer">AI Background Changer</a>
+<a href="object-remover.html" data-tool="ai-object-remover">AI Object Remover</a>
+<a href="WaterMark-Remover.html" data-tool="ai-watermark-remover">AI Watermark Remover</a>
+</div>
+</div>
+
+<div class="menu-item">
+ALL AI TOOLS ▼
+<div class="dropdown">
+<a href="#" data-tool="all">View all tools</a>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="right-menu">
+<div class="login" id="loginBtn">Login</div>
+<div class="signup" id="signupBtn">Sign up</div>
+<i class="fas fa-th grid-icon"></i>
+</div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+<h1>Every AI tool you need in one place</h1>
+<p>Generate, remove, enhance and edit images instantly. All AI tools you need, at your fingertips — fast and easy to use.</p>
+
+<div class="tags" id="tags">
+<button class="tag-btn active" data-filter="all">All</button>
+<button class="tag-btn" data-filter="generators">Generators</button>
+<button class="tag-btn" data-filter="editors">Editors</button>
+<button class="tag-btn" data-filter="removers">Removers</button>
+<button class="tag-btn" data-filter="changers">Changers</button>
+</div>
+</section>
+
+<!-- GRID -->
+<main class="container">
+<div class="grid" id="toolsGrid">
+
+<div class="tool-box" data-category="generators,editors" data-href="image-generator.html" tabindex="0">
+<i class="fa-solid fa-image"></i>
+<h3>AI Image Generator</h3>
+<p>Create images using AI prompts</p>
+</div>
+
+<div class="tool-box" data-category="generators" data-href="Portrait-generator.html" tabindex="0">
+<i class="fa-solid fa-user"></i>
+<h3>AI Portrait Generator</h3>
+<p>Generate stylized portraits</p>
+</div>
+
+<div class="tool-box" data-category="generators" data-href="Avatar-generator.html" tabindex="0">
+<i class="fa-solid fa-user-circle"></i>
+<h3>AI Avatar Generator</h3>
+<p>Create avatar images</p>
+</div>
+
+<div class="tool-box" data-category="generators" data-href="Meme-generator.html" tabindex="0">
+<i class="fa-solid fa-face-laugh"></i>
+<h3>AI Meme Generator</h3>
+<p>Make memes quickly</p>
+</div>
+
+<div class="tool-box" data-category="generators" data-href="Sticker-generator.html" tabindex="0">
+<i class="fa-solid fa-sticky-note"></i>
+<h3>AI Sticker Generator</h3>
+<p>Sticker packs from images</p>
+</div>
+
+<div class="tool-box" data-category="generators" data-href="Logo-generator.html" tabindex="0">
+<i class="fa-brands fa-font-awesome"></i>
+<h3>AI Logo Generator</h3>
+<p>Logo drafts in seconds</p>
+</div>
+
+<div class="tool-box" data-category="changers,editors" data-href="Background-Changer.html" tabindex="0">
+<i class="fa-solid fa-layer-group"></i>
+<h3>AI Background Changer</h3>
+<p>Swap backgrounds easily</p>
+</div>
+
+<div class="tool-box" data-category="removers,editors" data-href="Background-Remover.html" tabindex="0">
+<i class="fa-solid fa-eraser"></i>
+<h3>AI Background Remover</h3>
+<p>Remove backgrounds instantly</p>
+</div>
+
+<div class="tool-box" data-category="removers,editors" data-href="object-remover.html" tabindex="0">
+<i class="fa-solid fa-scissors"></i>
+<h3>AI Object Remover</h3>
+<p>Erase unwanted objects</p>
+</div>
+
+<div class="tool-box" data-category="removers,editors" data-href="WaterMark-Remover.html" tabindex="0">
+<i class="fa-solid fa-water"></i>
+<h3>AI Watermark Remover</h3>
+<p>Remove watermarks from images</p>
+</div>
+
+</div>
+</main>
+
+<!-- LOGIN MODAL -->
+<div class="modal-backdrop" id="loginModal">
+<div class="modal">
+<h2>Login</h2>
+<p>Welcome back — login to continue.</p>
+
+<div class="field">
+<label>Email</label>
+<input type="email" id="loginEmail" placeholder="you@example.com">
+</div>
+
+<div class="field">
+<label>Password</label>
+<input type="password" id="loginPassword" placeholder="••••••">
+</div>
+
+<div class="modal-actions">
+<button class="btn btn-ghost" id="loginCancel">Cancel</button>
+<button class="btn btn-primary" id="loginSubmit">Login</button>
+</div>
+
+</div>
+</div>
+
+<!-- SIGNUP MODAL -->
+<div class="modal-backdrop" id="signupModal">
+<div class="modal">
+<h2>Sign up</h2>
+<p>Create an account to save your work.</p>
+
+<div class="field">
+<label>Name</label>
+<input type="text" id="signupName" placeholder="Your name">
+</div>
+
+<div class="field">
+<label>Email</label>
+<input type="email" id="signupEmail" placeholder="you@example.com">
+</div>
+
+<div class="field">
+<label>Password</label>
+<input type="password" id="signupPassword" placeholder="Choose a password">
+</div>
+
+<div class="modal-actions">
+<button class="btn btn-ghost" id="signupCancel">Cancel</button>
+<button class="btn btn-primary" id="signupSubmit">Create account</button>
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
+
+/* MODAL */
+const loginBtn=$('#loginBtn');
+const signupBtn=$('#signupBtn');
+const loginModal=$('#loginModal');
+const signupModal=$('#signupModal');
+const loginCancel=$('#loginCancel');
+const signupCancel=$('#signupCancel');
+const loginSubmit=$('#loginSubmit');
+const signupSubmit=$('#signupSubmit');
+
+function openModal(m){ m.style.display='flex'; m.setAttribute('aria-hidden','false'); const first=m.querySelector('input'); if(first) first.focus(); }
+function closeModal(m){ m.style.display='none'; m.setAttribute('aria-hidden','true'); }
+
+loginBtn.addEventListener('click',()=>openModal(loginModal));
+signupBtn.addEventListener('click',()=>openModal(signupModal));
+loginCancel.addEventListener('click',()=>closeModal(loginModal));
+signupCancel.addEventListener('click',()=>closeModal(signupModal));
+
+loginSubmit.addEventListener('click',()=>{
+const email=$('#loginEmail').value.trim();
+const pw=$('#loginPassword').value.trim();
+if(!email||!pw){ alert('Please enter email and password.'); return; }
+alert('Logged in (placeholder).'); closeModal(loginModal);
+});
+
+signupSubmit.addEventListener('click',()=>{
+const name=$('#signupName').value.trim();
+const email=$('#signupEmail').value.trim();
+const pw=$('#signupPassword').value.trim();
+if(!name||!email||!pw){ alert('Please fill all fields.'); return; }
+alert('Account created (placeholder).'); closeModal(signupModal);
+});
+
+[loginModal,signupModal].forEach(modal=>{
+modal.addEventListener('click',(e)=>{ if(e.target===modal) closeModal(modal); });
+});
+
+document.addEventListener('keydown',(e)=>{
+if(e.key==='Escape'){
+if(loginModal.style.display==='flex') closeModal(loginModal);
+if(signupModal.style.display==='flex') closeModal(signupModal);
+}
+});
+
+/* TAG FILTER */
+const tags=$$('#tags .tag-btn');
+const toolsGrid=$('#toolsGrid');
+const toolBoxes=$$('.tool-box',toolsGrid);
+
+function setActiveTag(b){ tags.forEach(t=>t.classList.remove('active')); b.classList.add('active'); }
+function filterTools(f){ toolBoxes.forEach(box=>{ const cats=box.dataset.category? box.dataset.category.split(',').map(s=>s.trim()):[]; if(f==='all'||cats.includes(f)){ box.style.display=''; } else{ box.style.display='none'; } }); }
+
+tags.forEach(btn=>{ btn.addEventListener('click',()=>{ setActiveTag(btn); filterTools(btn.dataset.filter); }); });
+
+filterTools('all');
+
+toolBoxes.forEach(b=>{
+b.addEventListener('click',()=>{ const href=b.dataset.href||'#'; if(href&&href!=='#') window.location.href=href; else alert('Open tool: '+b.querySelector('h3').innerText); });
+b.addEventListener('keydown',(e)=>{ if(e.key==='Enter') b.click(); });
+});
+
+/* MENU LINKS */
+$$('.dropdown a').forEach(a=>{
+a.addEventListener('click',(ev)=>{
+ev.preventDefault();
+const tool=a.dataset.tool;
+if(!tool) return;
+
+const mapping={
+'ai-image-generator':'image-generator.html',
+'ai-portrait-generator':'Portrait-generator.html',
+'ai-avatar-generator':'Avatar-generator.html',
+'ai-sticker-generator':'Sticker-generator.html',
+'ai-logo-generator':'Logo-generator.html',
+'ai-background-remover':'Background-Remover.html',
+'ai-background-changer':'Background-Changer.html',
+'ai-object-remover':'object-remover.html',
+'ai-watermark-remover':'WaterMark-Remover.html',
+'ai-meme-generator':'Meme-generator.html'
+};
+
+const target=mapping[tool];
+if(target) window.location.href=target;
+});
+});
+
+$('#homeBtn').addEventListener('click',()=>{ window.scrollTo({top:0,behavior:'smooth'}); $('#tags .tag-btn[data-filter="all"]').click(); });
+
+})();
+</script>
+
+</body>
+</html>
