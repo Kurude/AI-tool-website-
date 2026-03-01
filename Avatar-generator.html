@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon"href="favicon-16x16[1].png"type="image/x-icon">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Avatar Generator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #0d1117;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .box {
+    background: #161b22;
+    padding: 25px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  }
+  h2 {
+    text-align: center;
+    color: #58a6ff;
+    margin-top: 0;
+  }
+  textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    color: white;
+    min-height: 100px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    resize: none;
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+    background: #2563eb;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-size: 17px;
+    cursor: pointer;
+    margin-top: 5px;
+  }
+  button:hover { background: #1d4ed8; }
+  #result img {
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 15px;
+  }
+  .loading { text-align: center; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h2>AI Avatar Generator</h2>
+
+  <textarea id="prompt" placeholder="Describe the avatar... (example: cartoon avatar of young man, clean background)"></textarea>
+
+  <button id="generateBtn">Generate Avatar</button>
+  <button id="downloadBtn" style="display:none;">Download Avatar</button>
+
+  <div id="status" class="loading"></div>
+  <div id="result"></div>
+</div>
+
+<script>
+  // 🔥 ClipDrop API Key (hidden)
+  const API_KEY = "b603c361947ed03026d882fde00862b735831d1c21b1f32f9dfb7ae968cf5afddf97f0725f7c058d00a747dbfc40c0f3";
+
+  const generateBtn = document.getElementById("generateBtn");
+  const downloadBtn = document.getElementById("downloadBtn");
+  const statusEl = document.getElementById("status");
+  const resultEl = document.getElementById("result");
+  let currentImageURL = "";
+
+  generateBtn.onclick = async () => {
+    const prompt = document.getElementById("prompt").value.trim();
+    if(!prompt){
+      statusEl.innerHTML = "⚠️ Please enter an avatar prompt!";
+      return;
+    }
+
+    statusEl.innerHTML = "⏳ Generating avatar...";
+    resultEl.innerHTML = "";
+    downloadBtn.style.display = "none";
+
+    try{
+      const form = new FormData();
+      form.append("prompt", prompt + " — avatar, cartoon style, clean background");
+
+      const response = await fetch("https://clipdrop-api.co/text-to-image/v1", {
+        method: "POST",
+        headers: { "x-api-key": API_KEY },
+        body: form
+      });
+
+      if(!response.ok){
+        throw new Error(await response.text());
+      }
+
+      const blob = await response.blob();
+      currentImageURL = URL.createObjectURL(blob);
+
+      resultEl.innerHTML = `<img src="${currentImageURL}" />`;
+      statusEl.innerHTML = "✅ Avatar Ready!";
+      downloadBtn.style.display = "block";
+
+    }catch(err){
+      statusEl.innerHTML = "❌ Error: " + err.message;
+    }
+  };
+
+  downloadBtn.onclick = () => {
+    if(!currentImageURL) return;
+    const a = document.createElement("a");
+    a.href = currentImageURL;
+    a.download = "AI_Avatar.png";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  };
+</script>
+
+</body>
+</html>
